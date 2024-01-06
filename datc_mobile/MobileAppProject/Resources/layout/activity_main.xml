@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:orientation="vertical"
+    android:background="#6E6E6E"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp" >
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/Logo1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/logo"
+        android:contentDescription="WiseBee logo"
+
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="40dp"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:paddingBottom="30dp"
+        android:fontFamily="@font/roboto_black"
+           
+            />
+
+    <TextView
+        android:id="@+id/textView1" 
+        android:text="Email"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/roboto_black"
+            
+ 
+        />
+
+    <EditText
+        android:id="@+id/XetUsername" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/roboto_black"
+        />
+    <TextView
+        android:id="@+id/textView2" 
+        android:text="Password"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/roboto_black"
+  />
+    <EditText
+        android:id="@+id/XetPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="#ffffff"
+
+        />
+    <Button
+        android:id="@+id/XbtnInsert"
+        android:text="Login"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:textColor="#000000"
+        android:fontFamily="@font/roboto_black"
+        android:backgroundTint="#E9AB17" 
+        />
+   
+</LinearLayout>

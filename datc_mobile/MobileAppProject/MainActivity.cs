@@ -1,0 +1,234 @@
+﻿using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Widget;
+using AndroidX.AppCompat.App;
+using MobileAppProject.Classes;
+using MySql.Data.MySqlClient;
+using System;
+using System.Data;
+using Android.Provider;
+using Android.Views;
+using Android.Opengl;
+
+
+namespace MobileAppProject
+{
+    [Activity(MainLauncher = true)]
+    public class MainActivity : AppCompatActivity
+    {
+        
+        private EditText etUsername;
+        private EditText etPassword;
+        private Button btnInsert;
+        private string currentDeviceID;
+        private string hashPassword;
+        private MySqlConnection connection = new MySqlConnection("Server=34.118.79.104;Port=3306;database=datc;User Id=root;Password=andreiandreiandrei191919");
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            currentDeviceID = Settings.Secure.GetString(ContentResolver, Settings.Secure.AndroidId);
+
+            SetContentView(Resource.Layout.activity_main);
+
+            etUsername = FindViewById<EditText>(Resource.Id.XetUsername);
+            etPassword = FindViewById<EditText>(Resource.Id.XetPassword);
+            btnInsert = FindViewById<Button>(Resource.Id.XbtnInsert);
+            btnInsert.Click += BtnInsert_Click;
+          
+            
+        }
+
+        private void BtnInsert_Click(object sender, EventArgs e)
+        {
+            Activities.ClearAllPresets();
+
+            var toast = Toast.MakeText(this, "Please wait...", ToastLength.Short);
+            toast.SetGravity(GravityFlags.Center, 0, 0);
+            toast.Show();
+
+            Android.App.AlertDialog.Builder alertDialog = new Android.App.AlertDialog.Builder(this);
+
+            
+            try
+            {
+
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+
+                    HashConfiguration hashConfig = new HashConfiguration();
+                    hashPassword = hashConfig.HashPassword(etPassword.Text);
+
+
+                    MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM users WHERE email = @username AND passwrd = @password", connection);
+                    MySqlCommand cmdStatus = new MySqlCommand("SELECT is_admin FROM users WHERE email = @username AND passwrd = @password", connection);
+                    MySqlCommand cmdID = new MySqlCommand("SELECT device_id FROM users WHERE email=@username AND passwrd=@password", connection);
+                    MySqlCommand command = new MySqlCommand("SELECT * FROM presets", connection);
+                    MySqlCommand cmdParameters = new MySqlCommand("SELECT * FROM parameters", connection);
+
+                    cmd.Parameters.AddWithValue("@username", etUsername.Text);
+                    cmd.Parameters.AddWithValue("@password", hashPassword);
+                    cmdStatus.Parameters.AddWithValue("@username", etUsername.Text);
+                    cmdStatus.Parameters.AddWithValue("@password", hashPassword);
+                    cmdID.Parameters.AddWithValue("@username", etUsername.Text);
+                    cmdID.Parameters.AddWithValue("@password", hashPassword);
+
+                    object result = cmd.ExecuteScalar();
+                    object status = cmdStatus.ExecuteScalar();
+                    object did = cmdID.ExecuteScalar();
+
+                    if (result != null && result != DBNull.Value)
+                    {
+                        int count = Convert.ToInt32(result);
+                        bool admin = Convert.ToBoolean(status);
+                        string device_id = Convert.ToString(did);
+                        Actions.setDeviceId(currentDeviceID);
+
+                        if (currentDeviceID == device_id || device_id.Length != 16 || admin == true)
+                        {
+                            if (count > 0)
+                            {
+
+                                if (admin == true)
+                                {
+                                    //CheckFirstLogin(device_id.Length);
+
+                                    User.setUser(etUsername.Text);
+                                    User.isAdmin = true;
+                                    User.setDeviceId(currentDeviceID);
+                                    Intent nextActivity2 = new Intent(this, typeof(AdminActivity));
+                                    StartActivity(nextActivity2);
+                                }
+                                else
+                                {
+                                    CheckFirstLogin(device_id.Length);
+
+                                    User.setUser(etUsername.Text);
+                                    User.setDeviceId(currentDeviceID);
+                                    Intent nextActivity2 = new Intent(this, typeof(MenuActivity));
+                                    StartActivity(nextActivity2);
+                                }
+                            }
+                            else
+                            {
+                                alertDialog.SetMessage($"Username or password is not correct!");
+                                alertDialog.SetNeutralButton("Ok", delegate
+                                {
+                                    alertDialog.Dispose();
+                                });
+                                alertDialog.Show();
+                            }
+                        }
+                        else
+                        {
+
+                            alertDialog.SetMessage($"This account is not assigned to your device!");
+                            alertDialog.SetNeutralButton("Ok", delegate
+                            {
+                                alertDialog.Dispose();
+                            });
+
+                            alertDialog.Show();
+                        }
+                    }
+
+                    MySqlDataReader readerParameters = cmdParameters.ExecuteReader();
+
+                    if (readerParameters.Read())
+                    {
+                        Parameters.setTemperature(readerParameters.GetFloat(1));
+                        Parameters.setLight(readerParameters.GetInt32(2));
+                        Parameters.setDoorStatus(readerParameters.GetInt32(3));
+                        Parameters.setCurrentPreset(readerParameters.GetString(4));
+                    }
+
+                    readerParameters.Close();
+
+                    MySqlDataReader readerPresets = command.ExecuteReader();
+
+                    while (readerPresets.Read())
+                    {
+                        string preset = readerPresets.GetString("preset_name");
+                        string deviceId = readerPresets.GetString("device_id");
+
+                        if (deviceId.CompareTo(currentDeviceID) == 0 || deviceId.CompareTo("default") == 0)
+                        {
+                            Activities.AddPreset(preset);
+                        }
+                    }
+
+                    readerPresets.Close();
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                alertDialog.SetMessage($"We have an error here!");
+                alertDialog.SetNeutralButton("Ok", delegate
+                {
+                    alertDialog.Dispose();
+                });
+
+                alertDialog.Show();
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+            
+
+            if (etUsername.Text.Length <= 0 || etPassword.Text.Length <= 0) 
+            {
+                alertDialog.SetMessage($"Username or password is incorrect!!!");
+                alertDialog.SetNeutralButton("Ok", delegate
+                {
+                    alertDialog.Dispose();
+                });
+
+                alertDialog.Show();
+            }
+            /* asta doar ca sa mearga fara baza de date
+            else
+            {
+                User.setUser(etUsername.Text);
+                User.isAdmin = true;
+                User.setDeviceId(currentDeviceID);
+
+                UserCredentials user = new UserCredentials(currentDeviceID, etUsername.Text, etPassword.Text, "Admin", "Andmin", "1234567890123");
+                ListOfUsers.AddUser(user);
+
+                Intent nextActivity = new Intent(this, typeof(AdminActivity));
+                StartActivity(nextActivity);
+            }
+            */
+
+        }
+        
+        private void CheckFirstLogin(int length)
+        {
+            if (length != 16)
+            {
+                User.setDeviceId(currentDeviceID);
+                
+                MySqlCommand cmdsetID = new MySqlCommand("UPDATE users SET device_id = @deviceid WHERE email=@username AND passwrd=@password", connection);
+                cmdsetID.Parameters.AddWithValue("@username", etUsername.Text);
+                cmdsetID.Parameters.AddWithValue("@password", hashPassword);
+                cmdsetID.Parameters.AddWithValue("@deviceid", User.getDeviceId());
+                cmdsetID.ExecuteNonQuery();
+            }
+        }
+        
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+}

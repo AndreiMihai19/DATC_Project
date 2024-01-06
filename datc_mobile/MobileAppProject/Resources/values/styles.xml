@@ -1,0 +1,52 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+       
+    </style>
+
+  <style name="TableLayoutStyle">
+    <item name="android:background">@android:color/white</item>
+    <!-- Culoarea de fundal -->
+    <item name="android:padding">16dp</item>
+    <!-- Padding-ul -->
+    <item name="android:layout_margin">20dp</item>
+    <!-- Marginile -->
+    <item name="android:showDividers">middle</item>
+    <!-- Afișarea divizoarelor între rânduri și celule -->
+    <item name="android:divider">@android:color/white</item>
+    <!-- Culoarea divizorului -->
+    <item name="android:dividerHeight">10dp</item>
+    <!-- Înălțimea divizorului -->
+    <item name="android:textColor">@android:color/white</item>
+    <!-- Înălțimea divizorului -->
+    <item name="android:textSize">10dp</item>
+    <!-- Înălțimea divizorului -->
+  </style>
+
+
+  <style name="MyTheme.Base" parent="Theme.AppCompat.Light">
+  </style>
+
+  <style name="MyTheme" parent="MyTheme.Base">
+  </style>
+
+  <style name="MyTheme.Splash" parent ="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowActionBar">true</item>
+  </style>
+
+
+  <style name="SpinnerStyle" parent="@android:style/Widget.Spinner">
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textAlignment">center</item>
+  </style>
+  
+
+</resources>
