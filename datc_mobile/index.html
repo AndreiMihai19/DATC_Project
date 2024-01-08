@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stare Casa</title>
+    <!-- Adaugă link-urile către bibliotecile Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <style>
+    body {
+    background-image: url('https://cdn.pixabay.com/photo/2023/11/01/11/15/mountains-8357180_1280.jpg');
+    background-size: cover; /* Asigură-te că imaginea acoperă întreaga suprafață a ecranului */
+    background-position: center; /* Centrare imagine */
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+        .parameter-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .parameter-value {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+</style>
+</head>
+<body>
+
+    <div class="parameter-container">
+        <div class="parameter-value" id="temperature-value"></div>
+        <div class="parameter-value" id="light-intensity-value"></div>
+        <div class="parameter-value" id="door-status-value"></div>
+    </div>
+    
+   
+    <h1>Smart Home</h1>
+
+    <div id="temperatura"></div>
+    <div id="lumina"></div>
+    
+    <!-- Adaugă un contur de patrat format din patru dreptunghiuri -->
+    <div style="display: flex; justify-content: center; align-items: center; height: 300px; position: relative;">
+
+        <!-- Actualizează opacitatea în funcție de valoarea luminii -->
+        <div style="position: absolute; top: 10%; left: 30%; transform: translate(-20%, -60%); width: 980px; height: 400px; background-color: rgb(194, 194, 194); margin-top: 22%;"></div>
+        <div id="laturaStanga" style="position: absolute; top: 10%; left: 30%; transform: translate(-20%, -60%); width: 980px; height: 400px; background-color: yellow; margin-top: 22%;"></div>
+        
+        <div style="position: absolute; top: 40%; left: 30%; transform: translate(-20%, -60%); width: 1000px; height: 30px; background-color: rgb(0, 0, 0); margin-top: 5%;"></div>
+        <div style="position: absolute; top: 30%; left: 20%; transform: translate(-20%, -60%); width: 30px; height: 400px; background-color: rgb(0, 0, 0); margin-top: 18%;"></div>
+        <div style="position: absolute; top: 20%; right: 28%; transform: translate(-20%, -60%); width: 30px; height: 220px; background-color: rgb(0, 0, 0); margin-top: 15%;"></div>
+<div style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 250px; background-color: rgb(0, 0, 0); margin-top: 13%;"></div>
+<div style="position: absolute; top: 80%; left: 30%; transform: translate(-20%, -60%);width: 1000px; height: 50px; background-color: rgb(0, 0, 0); margin-top: 20%;"></div>
+<div style="position: absolute; top: 0%; left: 27%; transform: translate(-50%, -50%) rotate(60deg); width: 50px; height: 850px; background-color: rgb(230, 8, 8); margin-top: 7%;"></div>
+<div style="position: absolute; top: 0%; right: 33%; transform: translate(-50%, -50%) rotate(-60deg); width: 50px; height: 850px; background-color: rgb(230, 8, 8); margin-top: 7%;"></div>
+
+        <!-- Ușa, care poate dispărea/apărea -->
+       
+        <div  id="usa" style="position: absolute; top: 29%; right: 28%; transform: translate(-20%, -60%);width: 30px; height: 170px; background-color: rgb(100, 24, 28); margin-top: 23%;"></div>
+        <!-- Latura de jos a patratului -->
+        
+        <!-- Latura din dreapta -->
+       
+
+        <!-- Cercul pentru temperatura -->
+        <div id="cercTemperatura" style="position: absolute; top: 90%; left: 24%; transform: translate(-50%, -50%); width: 80px; height: 30px; background-color: rgba(0, 0, 0, 0.555); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 12px;"></div>
+        <div id="cercLumina" style="position: absolute; top: 100%; left: 24%; transform: translate(-50%, -50%); width: 80px; height: 30px; background-color: rgba(0, 0, 0, 0.534); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 12px;"></div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    // Când se încarcă pagina, solicităm toate datele
+    socket.emit('getParameters');
+
+    // Atunci când primim toate datele, le afișăm pe pagină în div-uri separate
+    socket.on('parametersData', (parameters) => {
+        updateParameterValue('cercTemperatura', ` ${parameters.temperature}°C`);
+        updateParameterValue('cercLumina', ` ${parameters.light_intensity}%`);
+            const laturaStanga = document.getElementById('laturaStanga');
+            const usaElement = document.getElementById('usa');
+            laturaStanga.style.opacity = parameters.light_intensity / 100;
+            usaElement.style.display = parameters.opened_door ? 'none' : 'block';
+    });
+
+    // Când primim o actualizare a parametrilor, reîmprospătăm datele în div-uri separate
+    socket.on('parametersUpdate', (parameters) => {
+        updateParameterValue('cercTemperatura', `${parameters.temperature}°C`);
+        updateParameterValue('cercLumina', ` ${parameters.light_intensity}%`);
+        const laturaStanga = document.getElementById('laturaStanga');
+            const usaElement = document.getElementById('usa');
+            laturaStanga.style.opacity = parameters.light_intensity / 100;
+            usaElement.style.display = parameters.opened_door ? 'none' : 'block';
+    });
+
+    // Funcție pentru actualizarea unei valori în funcție de parametru
+    function updateParameterValue(elementId, value) {
+        const parameterValue = document.getElementById(elementId);
+        parameterValue.innerHTML = value;
+    }
+
+
+</script>
+</body>
+</html>
