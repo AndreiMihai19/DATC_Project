@@ -1,0 +1,24 @@
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\bin\Debug\net7.0\HomematicApp.Context.deps.json
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\bin\Debug\net7.0\HomematicApp.Context.dll
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\bin\Debug\net7.0\HomematicApp.Context.pdb
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.csproj.AssemblyReference.cache
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.GeneratedMSBuildEditorConfig.editorconfig
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.AssemblyInfoInputs.cache
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.AssemblyInfo.cs
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.csproj.CoreCompileInputs.cache
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.dll
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\refint\HomematicApp.Context.dll
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.pdb
+D:\HomematicWeb\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\ref\HomematicApp.Context.dll
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\bin\Debug\net7.0\HomematicApp.Context.deps.json
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\bin\Debug\net7.0\HomematicApp.Context.dll
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\bin\Debug\net7.0\HomematicApp.Context.pdb
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.csproj.AssemblyReference.cache
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.GeneratedMSBuildEditorConfig.editorconfig
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.AssemblyInfoInputs.cache
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.AssemblyInfo.cs
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.csproj.CoreCompileInputs.cache
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.dll
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\refint\HomematicApp.Context.dll
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\HomematicApp.Context.pdb
+D:\DATC Proiect Homematic\Modul Web\HomematicApp\HomematicApp.Context\obj\Debug\net7.0\ref\HomematicApp.Context.dll
