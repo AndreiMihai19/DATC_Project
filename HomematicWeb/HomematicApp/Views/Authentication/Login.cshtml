@@ -1,0 +1,53 @@
+﻿@model HomematicApp.ViewModels.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+    ViewData["email-placeholder"] = "Email";
+    ViewData["password-placeholder"] = "Password";
+    ViewData["login-button"] = "Login";
+    ViewData["failure-message"] = "Invalid credentials!";
+    ViewData["invalid-imei"] = "Phone device not verified! Please login in the mobile app first.";
+
+}
+
+<h3 style="text-align:center">Login to your account</h3>
+<div class="container d-flex justify-content-center align-items-center">
+<div class="card shadow mb-4" style="width:50%; max-width:400px">
+<div class="card-body">
+            <div class="form-group row">
+                @if (ViewBag.LoginFailed == true)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <span class="closebtn" id="loginFailure" onclick="this.parentElement.style.display='none'">×</span>
+                        @ViewData["failure-message"]
+                    </div>
+                }
+                else if (ViewBag.InvalidIMEI == true)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+                        @ViewData["invalid-imei"]
+                    </div>
+                }
+            </div>
+        <form class="user" method="post" asp-action="LoginUser">
+            <div style="max-width:350px">
+            <input type="email" data-testid="LoginEmail" class="form-control form-control-user" asp-for="Email"
+                   placeholder=@ViewData["email-placeholder"]>
+            <span id="validationEmail" asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="spacing"></div>
+            <div style="max-width:350px">
+                <input type="password" id="LoginPassword" class="form-control form-control-user" asp-for="Password"
+                   placeholder=@ViewData["password-placeholder"]>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div style="float:right"><a asp-controller="Authentication" asp-action="ForgotPassword">Forgot your password?</a>
+        </div>
+                <button type="submit" id="submitLogin" class="btn btn-primary btn-user btn-block" style="margin-top:7%">
+        @ViewData["login-button"]
+    </button>
+</form>
+</div>
+</div>
+</div>

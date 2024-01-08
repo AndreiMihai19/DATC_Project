@@ -1,0 +1,101 @@
+﻿@model HomematicApp.ViewModels.UserModel
+
+@{
+    ViewData["Title"] = "Register Page";
+    ViewData["firstname-placeholder"] = "First Name";
+    ViewData["lastname-placeholder"] = "Last Name";
+    ViewData["email-placeholder"] = "Email";
+    ViewData["password-placeholder"] = "Password";
+    ViewData["cnp-placeholder"] = "Enter CNP";
+    ViewData["device-placeholder"] = "Enter IMEI code";
+    ViewData["register-button"] = "Register";
+    ViewData["rejection-message"] = "The account could not be created!";
+    ViewData["success-message"] = "The account was successfully created!";
+}
+
+<h2 style="text-align:center">Register users</h2>
+<div class="container d-flex justify-content-center align-items-center">
+<div class="card shadow mb-4">
+<div class="card-body">
+<form class="user" method="post" asp-action="Register">
+    <div class="form-group row">
+        @if (@ViewBag.RegisterSuccess == false)
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+                @ViewData["rejection-message"]
+            </div>
+        }
+        else if (ViewBag.RegisterSuccess == true)
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+                @ViewData["success-message"]
+            </div>
+        }
+    </div>
+
+     <div class="form-group row spacing justify-content-center align-items-center">
+        <div class="col-sm-12 mb-3 mb-sm-0">
+            <label asp-for="First_Name">@ViewData["firstname-placeholder"]<span class="text-danger">*</span></label>
+            <input type="text" id="firstName" class="form-control form-control-user" asp-for="First_Name"
+                               placeholder=@ViewData["firstname-placeholder"]>
+            @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+            {
+                <span asp-validation-for="First_Name" class="text-danger"></span>
+            }
+        </div>
+    </div>
+    <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12">
+            <label asp-for="Last_Name">@ViewData["lastname-placeholder"]<span class="text-danger">*</span></label>
+            <input type="text" id="lastName" class="form-control form-control-user" asp-for="Last_Name"
+                   placeholder=@ViewData["lastname-placeholder"]>
+            @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+            {
+                   <span asp-validation-for="Last_Name" class="text-danger"></span>
+            }
+        </div>
+    </div>
+    <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+        <label asp-for="Email">@ViewData["email-placeholder"]<span class="text-danger">*</span></label>
+        <input type="email" id="email" class="form-control form-control-user" asp-for="Email"
+               placeholder=@ViewData["email-placeholder"]>
+        @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+        {
+              <span asp-validation-for="Email" class="text-danger"></span>
+        }
+        </div>
+    </div>
+        <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <label asp-for="Passwrd">@ViewData["password-placeholder"]<span class="text-danger">*</span></label>
+                        <input type="password" id="password" class="form-control form-control-user"
+                               asp-for="Passwrd" placeholder=@ViewData["password-placeholder"]>
+                        @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span asp-validation-for="Passwrd" id="passwordError" class="text-danger"></span>
+                        }
+                    </div>
+    </div>
+    <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12">
+            <label asp-for="CNP">@ViewData["cnp-placeholder"]<span class="text-danger">*</span></label>
+            <input type="text" class="form-control form-control-user"
+                   asp-for="CNP" placeholder=@ViewData["cnp-placeholder"]>
+            <input type="text" hidden id="CNP" value="@ViewBag.InitialID" asp-for="Device_Id"  />
+            @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+            {
+                 <span asp-validation-for="CNP" id="CNPError" class="text-danger"></span>
+            }
+        </div>
+    </div>
+    <button type="submit" id="submit" class="btn btn-primary btn-user btn-block" style="float:right">
+        @ViewData["register-button"]
+    </button>
+</form>
+</div>
+</div>
+</div>
+
